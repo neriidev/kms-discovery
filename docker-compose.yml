@@ -2,14 +2,15 @@ version: "3.8"
 
 services:
   localstack:
+    container_name: localstack
     image: localstack/localstack:latest
     ports:
-      - "4566:4566"  # Porta principal de serviços AWS mock
-      - "4571:4571"
+      - "4566:4566"     # Porta principal para todos os serviços
+      - "4571:4571"     # Porta do edge router
     environment:
-      - SERVICES=sns
+      - SERVICES=sns,sqs,lambda,kms # ou o que você quiser ativar
       - DEBUG=1
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}  # chave da nuvem
     volumes:
+      - "./localstack:/var/lib/localstack"        # persistência local
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./localstack:/tmp/localstack"
