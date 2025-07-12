@@ -4,6 +4,6 @@ provider "aws" {
   region     = "us-east-1"
 
   endpoints {
-    sns = "http://localhost:4566"
+    sns = "https://localhost.localstack.cloud:4566"
   }
 }
